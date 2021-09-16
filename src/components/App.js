@@ -29,7 +29,7 @@ class App extends Component {
             <input placeholder="Search" />
             <div className="search-results">
               <ul>
-                <li className="searh-results-row">
+                <li className="search-results-row">
                   <img
                     src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
                     alt="user-dp"
