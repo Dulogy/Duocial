@@ -3,14 +3,28 @@ import React, { Component } from 'react';
 export default class Login extends Component {
   constructor(props) {
     super(props);
-    this.emailInputRef = React.createRef();
-    this.passwordInputRef = React.createRef();
+    // this.emailInputRef = React.createRef();
+    // this.passwordInputRef = React.createRef();
+    this.state = {
+      email: '',
+      password: '',
+    };
   }
-
+  handleEmailChange = (e) => {
+    this.setState({
+      email: e.target.value,
+    });
+  };
+  handlePasswordChange = (e) => {
+    this.setState({
+      password: e.target.value,
+    });
+  };
   handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(this.emailInputRef);
-    console.log(this.passwordInputRef);
+    console.log(this.state);
+    // console.log(this.emailInputRef);
+    // console.log(this.passwordInputRef);
   };
 
   render() {
@@ -22,7 +36,9 @@ export default class Login extends Component {
             type="email"
             placeholder="Email"
             required
-            ref={this.emailInputRef}
+            value={this.state.email}
+            // ref={this.emailInputRef}
+            onChange={this.handleEmailChange}
           />
         </div>
         <div className="field">
@@ -30,7 +46,9 @@ export default class Login extends Component {
             type="password"
             placeholder="Password"
             required
-            ref={this.passwordInputRef}
+            value={this.state.password}
+            // ref={this.passwordInputRef}
+            onChange={this.handlePasswordChange}
           />
         </div>
         <div className="field">
