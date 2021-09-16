@@ -1,20 +1,10 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 import { fetchPosts } from '../actions/posts';
-import { PostsList, Navbar } from './';
-
-const Home = () => {
-  return <div>Home</div>;
-};
-const Login = () => {
-  return <div>Login</div>;
-};
-const Signup = () => {
-  return <div>Signup</div>;
-};
+import { PostsList, Navbar, Home, Page404, Login, Signup } from './';
 
 class App extends Component {
   componentDidMount() {
@@ -25,22 +15,34 @@ class App extends Component {
     return (
       <Router>
         <div>
+          {/* available to all pages */}
           <Navbar />
           <ul>
-            <li>
-              <Link to="/home">Home</Link>
+            {/* links do not re-render the page */}
+
+            {/* <li>
+              <Link to="/">Home</Link>
             </li>
             <li>
               <Link to="/login">Login</Link>
             </li>
             <li>
               <Link to="/signup">Signup</Link>
-            </li>
+            </li> */}
           </ul>
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
-          {/* <PostsList posts={posts} />  */}
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={(props) => {
+                return <Home {...props} posts={posts} />;
+              }}
+            />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            <Route component={Page404} />
+            {/* <PostsList posts={posts} />  */}
+          </Switch>
         </div>
       </Router>
     );
