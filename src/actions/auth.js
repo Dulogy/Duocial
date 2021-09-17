@@ -1,8 +1,10 @@
 import { APIUrls } from '../helpers/url';
 import {
+  AUTHENTICATE_USER,
   LOGIN_FAILED,
   LOGIN_START,
   LOGIN_SUCCESS,
+  LOG_OUT,
   SIGNUP_FAILED,
   SIGNUP_START,
   SIGNUP_SUCCESS,
@@ -98,5 +100,18 @@ export function signup(name, email, password, confirmPassword) {
         }
         dispatch(signupFailed(data.message));
       });
+  };
+}
+
+export function authenticateUser(user) {
+  return {
+    type: AUTHENTICATE_USER,
+    user,
+  };
+}
+
+export function logOutUser() {
+  return {
+    type: LOG_OUT,
   };
 }

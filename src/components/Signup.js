@@ -5,12 +5,12 @@ import { signup, startSignup } from '../actions/auth';
 class Signup extends Component {
   constructor(props) {
     super(props);
-    this.state({
+    this.state = {
       name: '',
       email: '',
       password: '',
       confirmPassword: '',
-    });
+    };
   }
 
   handleInputChange = (field, value) => {
