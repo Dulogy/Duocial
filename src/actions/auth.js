@@ -1,5 +1,12 @@
 import { APIUrls } from '../helpers/url';
-import { LOGIN_FAILED, LOGIN_START, LOGIN_SUCCESS } from './actionTypes';
+import {
+  LOGIN_FAILED,
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  SIGNUP_FAILED,
+  SIGNUP_START,
+  SIGNUP_SUCCESS,
+} from './actionTypes';
 import { getFormBody } from '../helpers/utils';
 
 export function startLogin() {
@@ -37,11 +44,59 @@ export function login(email, password) {
       .then((data) => {
         console.log('data', data);
         if (data.success) {
+          localStorage.setItem('token', data.data.token);
           // dispatch action to save user
           dispatch(loginSuccess(data.data.user));
           return;
         }
         dispatch(loginFailed(data.message));
+      });
+  };
+}
+
+export function startSignup() {
+  return {
+    type: SIGNUP_START,
+  };
+}
+
+export function signupSuccess(user) {
+  return {
+    type: SIGNUP_SUCCESS,
+    user: user,
+  };
+}
+
+export function signupFailed(errorMessage) {
+  return {
+    type: SIGNUP_FAILED,
+    error: errorMessage,
+  };
+}
+
+export function signup(name, email, password, confirmPassword) {
+  return (dispatch) => {
+    const url = APIUrls.signup();
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: {
+        email,
+        password,
+        confirmPassword,
+        name,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          localStorage.setItem('token', data.data.token);
+          dispatch(signupSuccess(data.data.user));
+          return;
+        }
+        dispatch(signupFailed(data.message));
       });
   };
 }
