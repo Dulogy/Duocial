@@ -11,11 +11,9 @@ import {
 import jwtDecode from 'jwt-decode';
 
 import { fetchPosts } from '../actions/posts';
-import { PostsList, Navbar, Home, Page404, Login, Signup } from './';
+import { PostsList, Navbar, Home, Page404, Login, Signup, Settings } from './';
 import { authenticateUser } from '../actions/auth';
 import auth from '../reducers/auth';
-
-const Settings = () => <div>Settings</div>;
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, path, component: Component } = privateRouteProps;
@@ -76,11 +74,12 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
             {/* <PostsList posts={posts} />  */}
-            <PrivateRoute
+            {/* <PrivateRoute
               path="/settings"
               component={Settings}
               isLoggedin={auth.isLoggedin}
-            />
+            /> */}
+            <Route exact path="/settings" component={Settings} />
             <Route component={Page404} />
           </Switch>
         </div>
