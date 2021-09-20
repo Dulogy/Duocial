@@ -139,7 +139,7 @@ export function editUserFailed(error) {
   };
 }
 
-export function edituser(name, password, confirmPassword, userId) {
+export function editUser(name, password, confirmPassword, userId) {
   return (dispatch) => {
     const url = APIUrls.editProfile();
     fetch(url, {

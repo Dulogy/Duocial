@@ -11,7 +11,16 @@ import {
 import jwtDecode from 'jwt-decode';
 
 import { fetchPosts } from '../actions/posts';
-import { PostsList, Navbar, Home, Page404, Login, Signup, Settings } from './';
+import {
+  PostsList,
+  Navbar,
+  Home,
+  Page404,
+  Login,
+  Signup,
+  Settings,
+  UserProfile,
+} from './';
 import { authenticateUser } from '../actions/auth';
 import auth from '../reducers/auth';
 
@@ -91,6 +100,7 @@ class App extends Component {
               isLoggedin={auth.isLoggedin}
             /> */}
             <Route exact path="/settings" component={Settings} />
+            <Route exact path="/user/:userId" component={UserProfile} />
             <Route component={Page404} />
           </Switch>
         </div>
