@@ -23,6 +23,7 @@ import {
 } from './';
 import { authenticateUser } from '../actions/auth';
 import auth from '../reducers/auth';
+import { fetchUserFriends } from '../actions/friends';
 
 const PrivateRoute = (privateRouteProps) => {
   const { isLoggedin, path, component: Component } = privateRouteProps;
@@ -61,10 +62,11 @@ class App extends Component {
           _id: user._id,
         })
       );
+      this.props.dispatch(fetchUserFriends());
     }
   }
   render() {
-    const { posts } = this.props;
+    const { posts, auth, friends } = this.props;
     return (
       <Router>
         <div>
@@ -88,7 +90,14 @@ class App extends Component {
               exact
               path="/"
               render={(props) => {
-                return <Home {...props} posts={posts} />;
+                return (
+                  <Home
+                    {...props}
+                    posts={posts}
+                    friends={friends}
+                    isLoggedin={auth.isLoggedin}
+                  />
+                );
               }}
             />
             <Route exact path="/login" component={Login} />

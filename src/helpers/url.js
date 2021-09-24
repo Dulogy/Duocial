@@ -9,4 +9,5 @@ export const APIUrls = {
   //   fetchPosts: (page, limit) => `${API_ROOT}/posts?page=${page}&limit=${limit}`,
 
   userProfile: (userId) => `${API_ROOT}/user/${userId}`,
+  userFriends: () => `${API_ROOT}/friendship/fetch_user_friends`,
 };
