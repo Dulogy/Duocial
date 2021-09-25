@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { fetchUserProfile } from '../actions/profile';
 import { APIUrls } from '../helpers/url';
 import { getauthTokenFromLocalStorage } from '../helpers/utils';
-import { addFriend } from '../actions/friends';
+import { addFriend, removeFriend } from '../actions/friends';
 class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       success: null,
       error: null,
+      successMessage: null,
     };
   }
   componentDidMount() {
@@ -46,8 +47,36 @@ class UserProfile extends Component {
     if (data.success) {
       this.setState({
         success: true,
+        successMessage: 'Added Friend',
       });
       this.props.dispatch(addFriend(data.data.friendship));
+    } else {
+      this.setState({
+        success: null,
+        error: data.message,
+      });
+    }
+  };
+
+  handleRemoveFriendClick = async () => {
+    const { match } = this.props;
+    const url = APIUrls.removeFriend(match.params.userId);
+
+    const options = {
+      method: 'POST',
+      Headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getauthTokenFromLocalStorage()}`,
+      },
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (data.success) {
+      this.setState({
+        success: true,
+        successMessage: 'Removed Friend',
+      });
+      this.props.dispatch(removeFriend(match.params.userId));
     } else {
       this.setState({
         success: null,
@@ -72,7 +101,7 @@ class UserProfile extends Component {
     }
 
     const isUserFriend = this.checkIfUserIsFriend();
-    const { success, error } = this.state;
+    const { success, error, successMessage } = this.state;
     return (
       <div className="settings">
         <div className="img-container">
@@ -101,12 +130,15 @@ class UserProfile extends Component {
               Add Friend
             </button>
           ) : (
-            <button className="button edit-btn">Remove Friend</button>
+            <button
+              className="button edit-btn"
+              onClick={this.handleRemoveFriendClick}
+            >
+              Remove Friend
+            </button>
           )}
           {success && (
-            <div className="alert success-dailog">
-              Friend added successfully
-            </div>
+            <div className="alert success-dailog">{successMessage}</div>
           )}
           {error && <div className="alert error-dailog">{error}</div>}
         </div>
