@@ -20,6 +20,7 @@ import {
   Signup,
   Settings,
   UserProfile,
+  CreatePost,
 } from './';
 import { authenticateUser } from '../actions/auth';
 import auth from '../reducers/auth';
